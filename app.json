@@ -3,6 +3,7 @@
     "scheme": "acme",
     "userInterfaceStyle": "automatic",
     "orientation": "default",
+    "newArchEnabled": true,
     "web": {
       "output": "static",
       "bundler": "metro"
@@ -13,9 +14,14 @@
         {
           "origin": "https://n"
         }
+      ],
+      [
+        "expo-font", {
+          "fonts": ["/assets/fonts/Inter_18pt-Black", "/assets/fonts/Inter_18pt-Bold", "/assets/fonts/Inter_18pt-Medium", "/assets/fonts/Inter_18pt-Regular", "/assets/fonts/Inter_18pt-SemiBold", "/assets/fonts/Inter_18pt-Thin"]
+        }
       ]
     ],
-    "name": "unb-hub",
+    "name": "Hub UnB",
     "slug": "unb-hub"
   }
 }

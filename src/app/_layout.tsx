@@ -3,6 +3,8 @@ import { Stack } from "expo-router";
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from "react";
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { SafeAreaView, ScrollView } from "react-native";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -31,7 +33,13 @@ export default function Layout() {
 
   return (
     <Stack>
-      <Stack.Screen name='index' options={{ headerShown: false }}/>
+      <SafeAreaProvider>
+        <SafeAreaView className='flex-1'>
+          <ScrollView className='flex-1 justify-center align-center'>
+            <Stack.Screen name='index' options={{ headerShown: false }}/>
+        </ScrollView>
+        </SafeAreaView>
+      </SafeAreaProvider>
     </Stack>
   );
 }

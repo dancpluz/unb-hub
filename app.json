@@ -19,18 +19,29 @@
         "expo-font",
         {
           "fonts": [
-            "/assets/fonts/Inter_18pt-Black",
-            "/assets/fonts/Inter_18pt-Bold",
-            "/assets/fonts/Inter_18pt-Medium",
-            "/assets/fonts/Inter_18pt-Regular",
-            "/assets/fonts/Inter_18pt-SemiBold",
-            "/assets/fonts/Inter_18pt-Thin"
+            "src/assets/fonts/Inter_18pt-Black.ttf",
+            "src/assets/fonts/Inter_18pt-Bold.ttf",
+            "src/assets/fonts/Inter_18pt-Medium.ttf",
+            "src/assets/fonts/Inter_18pt-Regular.ttf",
+            "src/assets/fonts/Inter_18pt-SemiBold.ttf",
+            "src/assets/fonts/Inter_18pt-Thin.ttf"
           ]
         }
       ],
       "expo-sqlite"
     ],
     "name": "Hub UnB",
-    "slug": "unb-hub"
+    "slug": "unb-hub",
+    "extra": {
+      "router": {
+        "origin": "https://n"
+      },
+      "eas": {
+        "projectId": "33a51dc1-7726-4611-9146-f962a4997f3b"
+      }
+    },
+    "android": {
+      "package": "com.dancpluz.unbhub"
+    }
   }
 }

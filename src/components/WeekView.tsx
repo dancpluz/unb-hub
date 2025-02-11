@@ -1,5 +1,4 @@
 import { useSQLiteContext } from 'expo-sqlite';
-import { useState } from 'react';
 import { View, Text, TouchableOpacity, FlatList } from 'react-native';
 import { ClassEvent, deleteClassEvent } from '../db/database';
 import { Link } from 'expo-router';
@@ -8,9 +7,8 @@ import React from 'react';
 import { daysOfWeek, translations } from '@/utils/constants';
 import { Alert } from 'react-native';
 
-export default function WeekView() {
+export default function WeekView({ schedule, setSchedule }: { schedule: ClassEvent[], setSchedule: React.Dispatch<React.SetStateAction<ClassEvent[]>> }) {
   const db = useSQLiteContext();
-  const [schedule, setSchedule] = useState<ClassEvent[]>([]);
 
   const loadSchedule = async () => {
     const results = await db.getAllAsync<ClassEvent>(

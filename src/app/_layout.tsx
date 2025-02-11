@@ -1,10 +1,12 @@
 import "../global.css";
-import { Stack } from "expo-router";
+import { Link, Stack } from "expo-router";
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from "react";
+import { useEffect } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { SafeAreaView, ScrollView } from "react-native";
+import { SQLiteProvider } from 'expo-sqlite';
+import { initDatabase } from '../db/database';
+import { translations } from "../utils/constants";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -32,14 +34,35 @@ export default function Layout() {
   }
 
   return (
-    <Stack>
+    <SQLiteProvider
+      databaseName="schedule.db"
+      onInit={async (db) => {
+        await initDatabase(db);
+      }}
+    >
       <SafeAreaProvider>
-        <SafeAreaView className='flex-1'>
-          <ScrollView className='flex-1 justify-center align-center'>
-            <Stack.Screen name='index' options={{ headerShown: false }}/>
-        </ScrollView>
-        </SafeAreaView>
+        <Stack
+          screenOptions={{
+            headerStyle: { backgroundColor: '#f3f4f6' },
+            headerTitleStyle: { fontFamily: 'Inter-SemiBold' },
+          }}
+        >
+          <Stack.Screen
+            name="index"
+            options={{
+              title: translations.mySchedule,
+              headerShown: true,
+            }}
+          />
+          <Stack.Screen
+            name="add"
+            options={{
+              title: translations.newClass,
+              presentation: 'modal'
+            }}
+          />
+        </Stack>
       </SafeAreaProvider>
-    </Stack>
+    </SQLiteProvider>
   );
 }

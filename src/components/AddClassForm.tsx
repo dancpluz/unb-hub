@@ -3,9 +3,20 @@ import { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { View, Text, TouchableOpacity, Platform, TextInput } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { ClassEvent } from '../db/database';
+import { ClassEvent, insertClassEvent } from '../db/database';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { daysOfWeek, translations } from '../utils/constants';
+import ColorPicker from 'react-native-wheel-color-picker';
+
+const DEFAULT_COLOR = '#dbeafe'; // Cor padrão azul claro
+const COLOR_PRESETS = [
+  '#dbeafe', // blue-50
+  '#fce7f3', // pink-50
+  '#ecfccb', // lime-100
+  '#dcfce7', // green-50
+  '#fef9c3', // yellow-50
+  '#ffe4e6', // rose-50
+];
 
 export default function AddClassForm() {
   const {
@@ -16,7 +27,8 @@ export default function AddClassForm() {
   } = useForm<ClassEvent>({
     defaultValues: {
       startTime: '08:00',
-      endTime: '09:00'
+      endTime: '09:00',
+      color: DEFAULT_COLOR
     }
   });
 
@@ -29,6 +41,8 @@ export default function AddClassForm() {
   const [showStartPicker, setShowStartPicker] = useState(false);
   const [showEndPicker, setShowEndPicker] = useState(false);
   const [daysError, setDaysError] = useState(false);
+  const [showColorPicker, setShowColorPicker] = useState(false);
+  const [selectedColor, setSelectedColor] = useState(DEFAULT_COLOR);
 
   const handleTimeChange = (type: 'start' | 'end', selectedTime?: Date) => {
     const currentTime = selectedTime || new Date();
@@ -70,24 +84,13 @@ export default function AddClassForm() {
 
     const event: ClassEvent = {
       ...data,
+      color: selectedColor, // Adicione a cor
       recurrence: 'weekly',
       recurrenceDays: JSON.stringify(selectedDays),
-      day: selectedDays[0] // Store first day just for initial reference
+      day: selectedDays[0]
     };
 
-    await db.runAsync(
-      `INSERT INTO classes (discipline, className, startTime, endTime, day, recurrence, recurrenceDays) 
-     VALUES (?, ?, ?, ?, ?, ?, ?)`,
-      [
-        event.discipline,
-        event.className,
-        event.startTime,
-        event.endTime,
-        event.day,
-        event.recurrence,
-        event.recurrenceDays
-      ]
-    );
+    await insertClassEvent(db, event);
 
     router.back();
   };
@@ -253,7 +256,43 @@ export default function AddClassForm() {
           )}
         </View>
       </View>
+      <View className="mb-6">
+        <Text className="text-gray-600 mb-3">{translations.selectColor}</Text>
+        <View className="flex-row flex-wrap gap-2">
+          {COLOR_PRESETS.map((color) => (
+            <TouchableOpacity
+              key={color}
+              className={`w-12 h-12 rounded-full border-2 ${selectedColor === color ? 'border-blue-500' : 'border-gray-200'
+                }`}
+              style={{ backgroundColor: color }}
+              onPress={() => setSelectedColor(color)}
+            />
+          ))}
+          <TouchableOpacity
+            className="w-12 h-12 rounded-full border-2 border-gray-200 items-center justify-center"
+            onPress={() => setShowColorPicker(true)}>
+            <Text className="text-gray-500">+</Text>
+          </TouchableOpacity>
+        </View>
 
+        {showColorPicker && (
+          <View className="mt-4">
+            <ColorPicker
+              color={selectedColor}
+              onColorChangeComplete={(color) => setSelectedColor(color)}
+              thumbSize={30}
+              sliderSize={30}
+              gapSize={10}
+              swatches={false}
+            />
+            <TouchableOpacity
+              className="bg-blue-500 p-3 rounded-lg mt-4"
+              onPress={() => setShowColorPicker(false)}>
+              <Text className="text-white text-center">Selecionar Cor</Text>
+            </TouchableOpacity>
+          </View>
+        )}
+      </View>
       <TouchableOpacity
         className="bg-blue-500 p-4 rounded-lg items-center"
         onPress={handleSubmit(onSubmit)}

@@ -11,4 +11,5 @@ export const translations = {
   saveSchedule: 'Salvar Horário',
   mySchedule: 'Minha Grade Horária',
   newClass: 'Nova Aula',
+  selectColor: 'Selecionar Cor',
 };

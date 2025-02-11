@@ -5,7 +5,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { SQLiteProvider } from 'expo-sqlite';
-import { initDatabase } from '../db/database';
+import { initDatabase, resetDatabase } from '../db/database';
 import { translations } from "../utils/constants";
 
 SplashScreen.preventAutoHideAsync();
@@ -37,6 +37,7 @@ export default function Layout() {
     <SQLiteProvider
       databaseName="schedule.db"
       onInit={async (db) => {
+        //await resetDatabase(db);
         await initDatabase(db);
       }}
     >

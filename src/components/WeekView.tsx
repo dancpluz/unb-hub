@@ -1,11 +1,10 @@
 import { useSQLiteContext } from 'expo-sqlite';
-import { View, Text, TouchableOpacity, FlatList } from 'react-native';
+import { View, Text, TouchableOpacity, FlatList, Alert } from 'react-native';
 import { ClassEvent, deleteClassEvent } from '../db/database';
 import { Link } from 'expo-router';
 import { useFocusEffect } from '@react-navigation/native';
 import React from 'react';
 import { daysOfWeek, translations } from '@/utils/constants';
-import { Alert } from 'react-native';
 
 export default function WeekView({ schedule, setSchedule }: { schedule: ClassEvent[], setSchedule: React.Dispatch<React.SetStateAction<ClassEvent[]>> }) {
   const db = useSQLiteContext();
@@ -17,21 +16,17 @@ export default function WeekView({ schedule, setSchedule }: { schedule: ClassEve
     setSchedule(results);
   };
 
-  // Replace useEffect with:
   useFocusEffect(
     React.useCallback(() => {
       loadSchedule();
     }, [])
   );
 
-  // Group classes by day with empty arrays for days without classes
-  // components/WeekView.tsx
+  // Agrupa as aulas por dia
   const groupByDay = daysOfWeek.reduce((acc, day) => {
     acc[day] = schedule.filter(event => {
       try {
-        const recurrenceDays = event.recurrenceDays
-          ? JSON.parse(event.recurrenceDays)
-          : [];
+        const recurrenceDays = event.recurrenceDays ? JSON.parse(event.recurrenceDays) : [];
         return recurrenceDays.includes(day);
       } catch (error) {
         console.error('Error parsing recurrenceDays:', error);
@@ -76,7 +71,11 @@ export default function WeekView({ schedule, setSchedule }: { schedule: ClassEve
             </View>
 
             {groupByDay[day].map(event => (
-              <View key={event.id} className="bg-blue-50 p-4 rounded-lg mb-2 flex-row justify-between items-center">
+              <View
+                key={event.id}
+                className="p-4 rounded-lg mb-2 flex-row justify-between items-center"
+                style={{ backgroundColor: event.color }}
+              >
                 <View className="flex-1">
                   <Text className="font-semibold text-base text-gray-800">
                     {event.discipline.toUpperCase()}

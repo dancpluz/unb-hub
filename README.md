@@ -6,7 +6,7 @@
 
 ## 📚 About
 
-Welcome to UNB Hub, a mobile application developed for the Information Systems course at the University of Brasília\! Our goal is to simplify the academic lives of students by offering a set of essential tools for organization and planning. This project stands out for its use of AI to optimize the requirements engineering and prototyping process for new features.
+Welcome to UnB Hub, a mobile application developed for the Information Systems course at the University of Brasília\! Our goal is to simplify the academic lives of students by offering a set of essential tools for organization and planning. This project stands out for its use of AI to optimize the requirements engineering and prototyping process for new features.
 
 UNB Hub was born from the need to centralize various useful functions for university life. Conceived in React Native, this project went through an extensive design process in Figma, where all screens, business rules, and requirements were meticulously defined. The current phase culminated in the implementation of the Class Schedule feature, showcasing the practical application of Generative AI to aid in software development.
 
@@ -91,7 +91,7 @@ We are immensely grateful to our colleagues Pedro and Hudson for their dedicatio
 
   * **AI Documentation:** Explore the application of generative AI in the requirements engineering process [here](https://www.overleaf.com/read/zdffjhnzjhqh#28fac5).
   * **Video Demonstration:** Watch the demo of the Class Schedule functionality [here](https://youtube.com/shorts/V0HpSU5ZNlg).
-  * **Figma Design:** See the complete prototype of the UNB Hub screens [here](https://www.figma.com/design/A7y8MxSt8B3qqO8Fu388FM/Trabalho-SI?node-id=1-3&t=IFIq4A2Lw2ThRbXB-1).
+  * **Figma Design:** See the complete prototype of the UNB Hub screens [here](https://www.figma.com/proto/A7y8MxSt8B3qqO8Fu388FM/Trabalho-SI?node-id=1-3&t=gvr1udFdTgtdrVXB-1).
 
 ## ⚠ WIP
 
